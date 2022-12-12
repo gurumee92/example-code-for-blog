@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.40.6
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+
+  group-a-node-0:
+    container_name: group-a-node-0
+    image: prom/node-exporter
+  group-a-node-1:
+    container_name: group-a-node-1
+    image: prom/node-exporter
+  group-b-node-0:
+    container_name: group-b-node-0
+    image: prom/node-exporter
+  group-b-node-1:
+    container_name: group-b-node-1
+    image: prom/node-exporter
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:9.3.1
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
