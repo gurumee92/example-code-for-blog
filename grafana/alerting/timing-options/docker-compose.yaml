@@ -20,6 +20,9 @@ services:
   group-a-node-1:
     container_name: group-a-node-1
     image: prom/node-exporter
+  group-a-node-2:
+    container_name: group-a-node-2
+    image: prom/node-exporter
   group-b-node-0:
     container_name: group-b-node-0
     image: prom/node-exporter
@@ -37,3 +40,4 @@ services:
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_LOG_LEVEL=debug
